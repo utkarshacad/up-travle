@@ -20,6 +20,12 @@ Maps are switched from the config modal using the map picker.
 
 ## Features
 
+- **Daily puzzle:** one shared route per map each day, resetting at midnight IST; par + 4 guesses allowed; progress is kept if you reload
+- **Practice mode:** unlimited random or custom routes with adjustable difficulty
+- **Stats and streaks:** games played, win %, current and best streak, and guesses-over-par chart, saved in the browser per map
+- **Share card:** Wordle-style emoji result (🟩 on a shortest route, 🟨 one step off, 🟥 further away)
+- **Phone layout:** route and guess box first, pinch-to-zoom and drag-to-pan map
+
 - Route puzzles between a start and end district on the selected map
 - Win condition based on the shortest possible path length (any valid shortest chain wins, not one specific stored path)
 - Guess districts by name, including common alternate names (e.g. Allahabad for Prayagraj)
@@ -35,6 +41,10 @@ Maps are switched from the config modal using the map picker.
 - The state outline is decorative only and does not affect gameplay.
 - Among equally short routes, the generated solution is the straightest one between start and end.
 - Punjab uses the 2011 census baseline, so Malerkotla (created in 2021) is not a separate district.
+
+## Previous version
+
+The pre-daily version (v1) is kept at `v1.html` (https://utkarshacad.github.io/up-travle/v1.html).
 
 ## Known issues
 

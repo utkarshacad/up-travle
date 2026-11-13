@@ -4,11 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Travle — District Chain Puzzle</title>
-<meta name="description" content="A daily geography puzzle: connect two Indian districts through a chain of neighbouring districts in as few guesses as possible.">
-<meta name="theme-color" content="#1c1b19">
-<meta property="og:title" content="UP Travle — daily district chain puzzle">
-<meta property="og:description" content="Connect two districts of Uttar Pradesh, Punjab or Jammu &amp; Kashmir through their neighbours. New puzzle every day.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%231c1b19%22/%3E%3Ccircle cx=%229%22 cy=%2223%22 r=%224.5%22 fill=%22%23d3869b%22/%3E%3Ccircle cx=%2223%22 cy=%229%22 r=%224.5%22 fill=%22%237dafa3%22/%3E%3Cpath d=%22M12 20l8-8%22 stroke=%22%23ddc7a1%22 stroke-width=%223%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -907,202 +902,6 @@
     0%{opacity:0; transform:translateY(4px);}
     100%{opacity:1; transform:translateY(0);}
   }
-
-  /* ================= v2 additions ================= */
-  :root{ --amber:#d8a657; }
-  .d-near{background:var(--amber); color:#2a1f08;}
-
-  .header-tools{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
-  .mode-switch{
-    display:inline-flex;
-    padding:3px;
-    border:1.5px solid var(--border);
-    border-radius:999px;
-    background:rgba(0,0,0,0.18);
-  }
-  .mode-btn{
-    padding:7px 16px;
-    border:none;
-    border-radius:999px;
-    background:transparent;
-    color:var(--ink-soft);
-    font-size:0.82rem;
-    font-weight:500;
-    box-shadow:none;
-  }
-  .mode-btn:hover{background:rgba(255,255,255,0.05); color:var(--ink); box-shadow:none; transform:none;}
-  .mode-btn.active{background:var(--beige); color:#241d10; font-weight:600;}
-  .mode-daily #resetBtn{display:none;}
-
-  .round-meta{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:0.72rem;
-    color:var(--ink-soft);
-    margin:-4px 0 12px;
-    letter-spacing:0.02em;
-  }
-  .round-meta b{color:var(--ink); font-weight:600;}
-  .round-meta.low b{color:var(--red);}
-
-  /* The side column is now two cards (play + tools); on desktop they stack
-     beside the map exactly where the single card used to be. */
-  .layout{
-    grid-template-columns:1.5fr 1fr;
-    grid-template-areas:"map play" "map tools";
-    grid-template-rows:auto 1fr;
-    align-items:start;
-  }
-  .side{display:contents;}
-  .map-panel{grid-area:map;}
-  .play-card{grid-area:play;}
-  .tools-card{grid-area:tools;}
-  .play-card .guess-form{margin-bottom:0;}
-
-  .action-card.confirming{box-shadow:0 0 0 2px var(--red);}
-  .action-card.confirming .action-card-cta{color:#5a1410;}
-
-  .banner-actions{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
-  .banner-actions:empty{display:none;}
-  .banner-btn{
-    display:inline-flex; align-items:center; gap:6px;
-    padding:8px 14px;
-    border-radius:999px;
-    background:rgba(36,29,16,0.08);
-    border:1.5px solid rgba(36,29,16,0.35);
-    color:#241d10;
-    font-size:0.8rem;
-    font-weight:600;
-  }
-  .banner-btn svg{width:15px; height:15px;}
-  .banner-btn:hover{background:rgba(36,29,16,0.16); border-color:#241d10; color:#241d10;}
-  .banner-btn.primary{background:#241d10; color:var(--beige); border-color:#241d10;}
-  .banner-btn.primary:hover{background:#3a2f1a; color:var(--beige);}
-
-  /* Stats modal */
-  .stats-box{max-width:440px;}
-  .stats-map{
-    font-family:'Lora',serif; font-style:italic;
-    font-size:0.85rem; color:var(--ink-soft);
-    margin:-10px 0 18px;
-  }
-  .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:22px;}
-  .stat{text-align:center;}
-  .stat b{
-    display:block;
-    font-family:'Playfair Display',serif;
-    font-size:2rem; font-weight:700; line-height:1.1;
-    color:var(--ink);
-  }
-  .stat span{font-size:0.7rem; color:var(--ink-soft); letter-spacing:0.02em;}
-  .dist-row{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
-  .dist-label{
-    width:58px; flex-shrink:0;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:0.72rem; color:var(--ink-soft); text-align:right;
-  }
-  .dist-track{flex:1;}
-  .dist-bar{
-    display:block;
-    min-width:24px;
-    padding:3px 8px;
-    border-radius:3px;
-    background:var(--grey-light);
-    color:var(--ink);
-    font-family:'IBM Plex Mono',monospace;
-    font-size:0.72rem; font-weight:600;
-    text-align:right;
-    transition:width 0.5s ease;
-  }
-  .dist-row.current .dist-bar{background:var(--beige); color:#241d10;}
-  .dist-row.current.miss .dist-bar{background:var(--red); color:#241010;}
-  .stats-footer{
-    display:flex; align-items:center; justify-content:space-between; gap:14px;
-    margin-top:20px; padding-top:16px;
-    border-top:1px dashed var(--border);
-  }
-  .stats-next{font-size:0.72rem; color:var(--ink-soft); line-height:1.4;}
-  .stats-next b{
-    display:block;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:1.25rem; color:var(--ink); font-weight:600;
-  }
-  .stats-footer .modal-btn-primary{flex:0 0 auto; padding:11px 18px; display:inline-flex; align-items:center; gap:7px;}
-  .stats-footer .modal-btn-primary svg{width:16px; height:16px;}
-
-  .toast{
-    position:fixed;
-    left:50%; bottom:28px;
-    transform:translate(-50%, 20px);
-    background:var(--beige); color:#241d10;
-    font-weight:600; font-size:0.85rem;
-    padding:10px 18px;
-    border-radius:999px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.45);
-    opacity:0; pointer-events:none;
-    transition:opacity 0.2s ease, transform 0.2s ease;
-    z-index:200;
-  }
-  .toast.show{opacity:1; transform:translate(-50%, 0);}
-
-  #mapSvg{touch-action:pan-y;}
-  #mapSvg.zoomed{touch-action:none;}
-
-  /* ---------- Tablet / narrow ---------- */
-  @media (max-width:880px){
-    .layout{
-      grid-template-columns:1fr;
-      grid-template-areas:"play" "map" "tools";
-      grid-template-rows:auto;
-    }
-  }
-
-  /* ---------- Phone ---------- */
-  @media (max-width:640px){
-    body{padding:10px;}
-    header{
-      align-items:center;
-      padding-bottom:8px;
-      margin-bottom:10px;
-      gap:10px;
-    }
-    .title-block h1{font-size:1.6rem;}
-    .title-block .sub{font-size:0.74rem;}
-    .scale-badge{display:none;}
-    .header-tools{width:100%; gap:8px;}
-    .mode-switch{flex:1;}
-    .mode-btn{flex:1; padding:8px 0;}
-    .header-tools .config-trigger{padding:9px 11px;}
-    .header-tools .btn-label{display:none;}
-    .layout{gap:10px;}
-    .card-pad{padding:12px;}
-    .status-line{margin-bottom:10px; padding-bottom:6px; font-size:0.82rem;}
-    .endpoints{font-size:0.95rem; margin-bottom:10px;}
-    .endpoints .arrow{font-size:0.68rem;}
-    input[type=text]{font-size:16px;} /* stops iOS zooming on focus */
-    .map-panel{padding:6px;}
-    .map-panel .map-caption{font-size:0.7rem; padding:0 4px 6px;}
-    .zoom-controls{top:40px; right:12px;}
-    .zoom-btn{width:32px; height:32px;}
-    .action-cards{grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;}
-    .action-card{padding:12px; border-radius:12px;}
-    .action-card-icon{margin-bottom:6px;}
-    .action-card-icon svg{width:20px; height:20px;}
-    .action-card-title{font-size:1rem; margin-bottom:6px;}
-    .action-card-desc{display:none;}
-    .hint-text{font-size:0.78rem;}
-    .pill-toggle{padding:7px 12px; font-size:0.76rem;}
-    .win-banner{padding:14px; font-size:0.95rem;}
-    .modal-overlay{padding:10px; align-items:flex-end;}
-    .modal-box{padding:18px 16px; max-height:92vh; border-radius:12px 12px 8px 8px;}
-    .map-picker-overlay{padding:18px 16px;}
-    .map-cards{flex-direction:column;}
-    .stat b{font-size:1.6rem;}
-    footer{font-size:0.62rem;}
-    .round-over .play-card .guess-form{display:none;}
-    .endpoints .arrow{flex:1; text-align:center; font-size:0;}
-    .endpoints .arrow::after{content:'\2192'; font-size:1.1rem;}
-    .round-over .win-banner{margin-bottom:0;}
-  }
 </style>
 </head>
 <body>
@@ -1112,22 +911,14 @@
       <h1 id="gameTitle">Uttar Pradesh Travle</h1>
       <div class="sub" id="gameSub">Uttar Pradesh District Chain &mdash; Practice Mode</div>
     </div>
-    <div class="header-tools">
-      <div class="mode-switch" role="group" aria-label="Game mode">
-        <button type="button" class="mode-btn active" data-mode="daily" aria-pressed="true">Daily</button>
-        <button type="button" class="mode-btn" data-mode="practice" aria-pressed="false">Practice</button>
-      </div>
-      <button type="button" id="statsBtn" class="config-trigger" title="Statistics" aria-label="Statistics">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="20" x2="6" y2="13"/><line x1="12" y1="20" x2="12" y2="5"/><line x1="18" y1="20" x2="18" y2="10"/></svg>
-        <span class="btn-label">Stats</span>
-      </button>
-      <button type="button" id="resetBtn" class="config-trigger" title="Restart this route" aria-label="Reset">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <button type="button" id="resetBtn" class="config-trigger">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
-        <span class="btn-label">Reset</span>
+        Reset
       </button>
-      <button type="button" id="configBtn" class="config-trigger" title="Configuration" aria-label="Configuration">
+      <button type="button" id="configBtn" class="config-trigger">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        <span class="btn-label">Configuration</span>
+        Configuration
       </button>
       <div class="scale-badge" id="scaleBadgeText">75 DISTRICTS &middot; 2011 BOUNDARIES<br>SCALE 1 : APPROX &middot; SHEET UP-01</div>
     </div>
@@ -1175,19 +966,17 @@
     </div>
 
     <div class="side">
-      <div class="panel card-pad play-card">
+      <div class="panel card-pad">
         <div class="status-line">CURRENT ROUTE</div>
         <div class="endpoints">
           <span class="ep start" id="startLabel">—</span>
           <span class="arrow">chain of adjacent districts &rarr;</span>
           <span class="ep end" id="endLabel">—</span>
         </div>
-        <div class="round-meta" id="roundMeta"></div>
 
         <div class="win-banner" id="winBanner">
           <div id="winHeadline"></div>
           <div class="path-reveal" id="winPathRow"></div>
-          <div class="banner-actions" id="bannerActions"></div>
         </div>
 
         <div class="guess-form">
@@ -1197,9 +986,7 @@
           </div>
           <button type="button" id="guessBtn">Guess</button>
         </div>
-        </div>
-      <div class="panel card-pad tools-card">
-        <div class="hint-text">Type a district name or its RTO code (e.g. UP70), then press Enter to autofill the top match and Enter again to guess. Districts chained back to your start turn beige; isolated guesses stay light grey. Connect start to end with any chain of real neighbouring districts to win. In your guesses, <b>&#10003;</b> means the district is on a shortest route, <b>&#8776;</b> one step off, <b>&#8213;</b> further away. The daily puzzle is the same for everyone and resets at midnight IST.</div>
+        <div class="hint-text">Type a district name or its RTO code (e.g. UP70), then press Enter to autofill the top match, and Enter again to guess. Districts chained back to your start district (directly or indirectly) turn beige; isolated guesses stay light grey. Connect start to end with any valid chain of real neighboring districts to win — it doesn't have to be the shortest route. Once you've won, press Enter again for a new route.</div>
 
         <div class="action-cards">
           <button type="button" class="action-card card-a" id="newPuzzleBtn">
@@ -1234,31 +1021,8 @@
     </div>
   </div>
 
-  <footer>Boundaries simplified from 2011 census district geometry &middot; adjacency computed from shared borders &middot; fan-made, not affiliated with Travle</footer>
+  <footer>Boundaries simplified from 2011 census district geometry &middot; adjacency computed from shared borders &middot; practice mode, not affiliated with Travle</footer>
 </div>
-
-<div class="modal-overlay" id="statsOverlay">
-  <div class="modal-box stats-box">
-    <div class="modal-header">
-      <h2>Statistics</h2>
-      <button type="button" class="modal-close" id="statsCloseBtn">&times;</button>
-    </div>
-    <div class="stats-map" id="statsMapLabel"></div>
-    <div class="stats-grid">
-      <div class="stat"><b id="stPlayed">0</b><span>Played</span></div>
-      <div class="stat"><b id="stWinPct">0</b><span>Win %</span></div>
-      <div class="stat"><b id="stStreak">0</b><span>Streak</span></div>
-      <div class="stat"><b id="stMaxStreak">0</b><span>Best streak</span></div>
-    </div>
-    <div class="modal-section-title">Guesses over par</div>
-    <div id="statsDist"></div>
-    <div class="stats-footer">
-      <div class="stats-next" id="statsNextWrap">Next daily in<b id="statsCountdown">--:--:--</b></div>
-      <button type="button" class="modal-btn-primary" id="statsShareBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share result</button>
-    </div>
-  </div>
-</div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <div class="modal-overlay" id="configOverlay">
   <div class="modal-box">
@@ -1390,108 +1154,6 @@ const MAPS = {
 
 let DATA, RTO_CODES, STATE_OUTLINE_D, ALIASES, names, nameLookup, rtoLookup, currentMapKey = null;
 
-// ---- v2: storage, dates, daily puzzle ----
-// localStorage wrapped in try/catch: it can be unavailable (private mode,
-// blocked storage) and the game must still be playable without it.
-const store = {
-  get(k){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } },
-  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-};
-
-// 'daily' = one shared, date-seeded route per map per day; 'practice' = v1 behaviour.
-let mode = 'daily';
-const DAILY_EPOCH = '2026-11-14';   // daily puzzle #1
-const DAILY_EXTRA_GUESSES = 4;      // daily allows par + this many guesses
-
-// The daily day rolls over at midnight India time for every player.
-function istDateKey(offsetDays){
-  const d = new Date(Date.now() + 5.5*3600e3 + (offsetDays||0)*864e5);
-  return d.toISOString().slice(0,10);
-}
-function shiftDateKey(key, days){
-  return new Date(Date.parse(key + 'T00:00:00Z') + days*864e5).toISOString().slice(0,10);
-}
-function dayNumber(key){
-  return Math.round((Date.parse(key) - Date.parse(DAILY_EPOCH)) / 864e5) + 1;
-}
-function hashStr(s){
-  let h = 2166136261 >>> 0;
-  for(let i=0; i<s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
-  return h >>> 0;
-}
-function mulberry32(a){
-  return function(){
-    a |= 0; a = a + 0x6D2B79F5 | 0;
-    let t = Math.imul(a ^ a >>> 15, 1 | a);
-    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  };
-}
-
-// Hop distance from one district to every other, cached per map.
-let distCache = {};
-function distFrom(src){
-  if(distCache[src]) return distCache[src];
-  const dist = {[src]:0};
-  const queue = [src];
-  while(queue.length){
-    const cur = queue.shift();
-    for(const nb of DATA[cur].n){
-      if(!(nb in dist)){ dist[nb] = dist[cur]+1; queue.push(nb); }
-    }
-  }
-  return distCache[src] = dist;
-}
-
-// Feedback tier for a guessed district: 0 = lies on SOME shortest route
-// (any tied one, not just the stored straightest one), 1 = one step off,
-// 2 = further away.
-function guessTier(name){
-  const dS = distFrom(state.start)[name], dE = distFrom(state.end)[name];
-  if(dS === undefined || dE === undefined) return 2;
-  const detour = dS + dE - (state.shortestPath.length - 1);
-  return detour <= 0 ? 0 : detour === 1 ? 1 : 2;
-}
-
-// Same route for everyone on a given IST date and map: every district pair
-// within the map's default difficulty range is listed in a fixed order, and a
-// PRNG seeded from map + date picks one pair and its direction.
-function dailyPuzzle(dateKey){
-  const rng = mulberry32(hashStr('travle:' + currentMapKey + ':' + dateKey));
-  const sorted = names.slice().sort();
-  const {minGuesses, maxGuesses} = MAPS[currentMapKey].defaults;
-  // Grouped by par so each difficulty in the range is equally likely
-  // (otherwise short routes, which are far more numerous, dominate).
-  const byPar = {};
-  for(let i=0; i<sorted.length; i++){
-    const d = distFrom(sorted[i]);
-    for(let j=i+1; j<sorted.length; j++){
-      const inter = d[sorted[j]] - 1;
-      if(inter >= minGuesses && inter <= maxGuesses) (byPar[inter] = byPar[inter] || []).push([sorted[i], sorted[j]]);
-    }
-  }
-  const pars = Object.keys(byPar).map(Number).sort((x,y)=>x-y);
-  const pairs = byPar[pars[Math.floor(rng()*pars.length)]];
-  const [a, b] = pairs[Math.floor(rng()*pairs.length)];
-  const [start, end] = rng() < 0.5 ? [a, b] : [b, a];
-  return {start, end, path: pickStraightestShortestPath(start, end)};
-}
-
-function dailyRecordKey(dateKey){ return 'travle.v2.daily.' + currentMapKey + '.' + dateKey; }
-function statsKey(){ return 'travle.v2.stats.' + currentMapKey; }
-function loadStats(){
-  return store.get(statsKey()) ||
-    {played:0, won:0, curStreak:0, maxStreak:0, lastPlayed:null, lastWon:null, dist:[0,0,0,0,0,0], lastBucket:null};
-}
-
-function mapLabel(){ return MAPS[currentMapKey].label.replace('&amp;','&'); }
-function updateSubtitle(){
-  const subEl = document.getElementById('gameSub');
-  if(!subEl || !currentMapKey) return;
-  subEl.textContent = mapLabel() + ' District Chain — ' +
-    (mode === 'daily' ? 'Daily #' + dayNumber(state.dateKey || istDateKey()) : 'Practice Mode');
-}
-
 function loadMap(key){
   const m = MAPS[key];
   if(!m) return;
@@ -1513,13 +1175,12 @@ function loadMap(key){
     });
   });
   districtElements = null; // force full SVG rebuild on next renderMap()
-  distCache = {};
-  store.set('travle.v2.map', key);
 
   const titleEl = document.getElementById('gameTitle');
+  const subEl = document.getElementById('gameSub');
   const badgeEl = document.getElementById('scaleBadgeText');
   if(titleEl) titleEl.textContent = m.label.replace('&amp;','&') + ' Travle';
-  updateSubtitle();
+  if(subEl) subEl.textContent = m.label.replace('&amp;','&') + ' District Chain \u2014 Practice Mode';
   if(badgeEl) badgeEl.innerHTML = names.length + ' DISTRICTS &middot; 2011 BOUNDARIES<br>SCALE 1 : APPROX &middot; SHEET ' + m.sheet;
   document.title = m.label.replace('&amp;','&') + ' Travle \u2014 District Chain Puzzle';
 
@@ -1660,8 +1321,8 @@ function bfsDistanceToSet(start, targetSet){
 
 let state = {
   start:null, end:null, shortestPath:[],
-  guesses:0, guessedNames:new Set(), order:[], won:false, hiddenFromMap:new Set(),
-  revealed:false, revealedSet:new Set(), dateKey:null, outcome:null
+  guesses:0, guessedNames:new Set(), won:false, hiddenFromMap:new Set(),
+  revealed:false, revealedSet:new Set()
 };
 
 let showRto = false;
@@ -1721,125 +1382,38 @@ function pickPuzzle(){
   return {start:names[0], end:names[10], path};
 }
 
-// Sets up a fresh round on the given start/end/path (both modes).
-function beginRound(p, dateKey){
+function initPuzzle(){
   cancelCelebration();
+  const p = pickPuzzle();
   state = {
     start:p.start, end:p.end, shortestPath:p.path,
-    guesses:0, guessedNames:new Set(), order:[], won:false, hiddenFromMap:new Set(),
-    revealed:false, revealedSet:new Set(),
-    dateKey: dateKey || null, outcome:null   // outcome: 'won' | 'lost' | 'gaveup'
+    guesses:0, guessedNames:new Set(), won:false, hiddenFromMap:new Set(),
+    revealed:false, revealedSet:new Set()
   };
   document.getElementById('startLabel').textContent = p.start;
   document.getElementById('endLabel').textContent = p.end;
   document.getElementById('winBanner').classList.remove('show','perfect');
   document.getElementById('ledger').innerHTML = '<div class="empty-ledger">No guesses yet. Start plotting your route.</div>';
+  document.getElementById('mapCaptionRight').textContent = 'Guesses: 0';
   document.getElementById('guessInput').value='';
-  resetGiveUpConfirm();
-  updateGuessCount();
-  updateSubtitle();
   renderMap();
   focusOnStartEnd();
-}
-
-function initPuzzle(){
-  beginRound(pickPuzzle());
-}
-
-// Loads today's daily for the current map and replays any guesses already
-// made today, so a reload (or coming back later) restores the exact state.
-function startDaily(){
-  const today = istDateKey();
-  beginRound(dailyPuzzle(today), today);
-  const rec = store.get(dailyRecordKey(today));
-  if(!rec) return;
-  (rec.guesses || []).forEach(n => { if(DATA[n]) applyGuess(n); });
-  updateGuessCount();
-  renderMap();
-  if(rec.outcome === 'won'){
-    state.won = true; state.outcome = 'won';
-    showSuccessBanner(computeIsPerfect());
-  } else if(rec.outcome === 'lost' || rec.outcome === 'gaveup'){
-    state.won = true; state.outcome = rec.outcome;
-    state.revealed = true;
-    state.revealedSet = new Set(state.shortestPath.slice(1,-1));
-    showRevealBanner(false);
-    renderMap();
-  }
-  updateGuessCount();
-  focusOnStartEnd();
-}
-
-function saveDailyRecord(){
-  if(mode !== 'daily' || !state.dateKey) return;
-  store.set(dailyRecordKey(state.dateKey), {guesses: state.order, outcome: state.outcome});
-}
-
-function guessLimit(){
-  return mode === 'daily' ? (state.shortestPath.length - 2) + DAILY_EXTRA_GUESSES : Infinity;
-}
-
-function updateGuessCount(){
-  const lim = guessLimit();
-  document.body.classList.toggle('round-over', !!state.outcome);
-  document.getElementById('mapCaptionRight').textContent =
-    'Guesses: ' + state.guesses + (isFinite(lim) ? ' / ' + lim : '');
-  const meta = document.getElementById('roundMeta');
-  if(meta){
-    if(mode === 'daily'){
-      const left = Math.max(0, lim - state.guesses);
-      meta.innerHTML = state.outcome ? `Daily #${dayNumber(state.dateKey)} &middot; complete`
-        : `Daily #${dayNumber(state.dateKey)} &middot; <b>${left}</b> guess${left===1?'':'es'} left`;
-      meta.classList.toggle('low', !state.outcome && left <= 2);
-    } else {
-      meta.innerHTML = 'Practice &middot; unlimited guesses';
-      meta.classList.remove('low');
-    }
-  }
-}
-
-// Updates the daily stats once per date when the daily ends.
-function recordDailyResult(won){
-  const st = loadStats();
-  if(st.lastPlayed === state.dateKey) return st;
-  st.played++;
-  let bucket;
-  if(won){
-    st.won++;
-    st.curStreak = (st.lastWon === shiftDateKey(state.dateKey, -1)) ? st.curStreak + 1 : 1;
-    st.lastWon = state.dateKey;
-    bucket = Math.min(4, Math.max(0, state.guesses - (state.shortestPath.length - 2)));
-  } else {
-    st.curStreak = 0;
-    bucket = 5;
-  }
-  st.dist[bucket]++;
-  st.maxStreak = Math.max(st.maxStreak, st.curStreak);
-  st.lastPlayed = state.dateKey;
-  st.lastBucket = bucket;
-  store.set(statsKey(), st);
-  return st;
 }
 
 // Restarts guessing on the SAME start/end and shortest path, wiping only
 // this attempt's guesses — unlike New Route, which picks a fresh pair.
-// Practice only: the daily cannot be retried.
 function resetCurrentRoute(){
-  if(mode === 'daily') return;
   cancelCelebration();
   state.guesses = 0;
   state.guessedNames = new Set();
-  state.order = [];
   state.hiddenFromMap = new Set();
   state.won = false;
-  state.outcome = null;
   state.revealed = false;
   state.revealedSet = new Set();
   document.getElementById('winBanner').classList.remove('show','perfect');
   document.getElementById('ledger').innerHTML = '<div class="empty-ledger">No guesses yet. Start plotting your route.</div>';
+  document.getElementById('mapCaptionRight').textContent = 'Guesses: 0';
   document.getElementById('guessInput').value='';
-  resetGiveUpConfirm();
-  updateGuessCount();
   renderMap();
   focusOnStartEnd();
 }
@@ -2023,27 +1597,20 @@ function showHoverLabel(name, cx, cy){
   g.classList.add('show');
 }
 
-const CAPTION_HINT = window.matchMedia('(pointer:coarse)').matches ? 'Tap a district to identify it' : 'Hover a district to identify it';
-document.getElementById('mapCaptionLeft').textContent = CAPTION_HINT;
-
 function hideHoverLabel(){
-  document.getElementById('mapCaptionLeft').textContent = CAPTION_HINT;
+  document.getElementById('mapCaptionLeft').textContent = 'Hover a district to identify it';
   document.getElementById('hoverLabel').classList.remove('show');
 }
 
-const TIER_LABELS = ['&#10003; Shortest route', '&#8776; One step off', '&#8213; Off route'];
-const TIER_CLASSES = ['d0', 'd-near', 'd-off'];
-const TIER_EMOJI = ['\u{1F7E9}', '\u{1F7E8}', '\u{1F7E5}'];
-
-function addLedgerRow(name, tier, isRepeat){
+function addLedgerRow(name, onRoute, isRepeat){
   const ledger = document.getElementById('ledger');
   const empty = ledger.querySelector('.empty-ledger');
   if(empty) empty.remove();
   const row = document.createElement('div');
   row.className = 'ledger-row';
   row.setAttribute('data-district', name);
-  const cls = TIER_CLASSES[tier];
-  const label = TIER_LABELS[tier];
+  const cls = onRoute ? 'd0' : 'd-off';
+  const label = onRoute ? '&#10003; Shortest route' : '&#8213; Not shortest';
   row.innerHTML = `<span class="lname">${name}${isRepeat?' (repeat)':''}</span><span class="ldist ${cls}">${label}</span>`;
   row.addEventListener('click', ()=>{
     if(state.hiddenFromMap.has(name)) state.hiddenFromMap.delete(name);
@@ -2105,83 +1672,39 @@ function showSuccessBanner(isPerfect){
   document.getElementById('winHeadline').innerHTML = headline;
   pathRowEl.classList.remove('solution-reveal');
   pathRowEl.innerHTML = buildPathRow(yourPath) + '.';
-  renderBannerActions();
   banner.classList.toggle('perfect', !!isPerfect);
   banner.classList.add('show');
 }
-
-// Share / stats / next-step buttons under the result banner.
-function renderBannerActions(){
-  const box = document.getElementById('bannerActions');
-  if(!box) return;
-  const shareSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
-  let html = '';
-  if(state.outcome === 'won' || mode === 'daily'){
-    html += `<button type="button" class="banner-btn primary" data-act="share">${shareSvg}Share result</button>`;
-  }
-  html += mode === 'daily'
-    ? '<button type="button" class="banner-btn" data-act="stats">Stats</button><button type="button" class="banner-btn" data-act="practice">Play practice</button>'
-    : '<button type="button" class="banner-btn" data-act="new">New route</button>';
-  box.innerHTML = html;
-}
-document.getElementById('bannerActions').addEventListener('click', (e)=>{
-  const b = e.target.closest('[data-act]');
-  if(!b) return;
-  const act = b.getAttribute('data-act');
-  if(act === 'share') shareResult();
-  else if(act === 'stats') openStats();
-  else if(act === 'practice') setMode('practice');
-  else if(act === 'new') initPuzzle();
-});
 
 // Reveal-solution stagger timing, shared between the map highlight and the
 // banner's path-chip fade-in so the two stay in sync.
 const REVEAL_STAGGER_MS = 150;
 
-function showRevealBanner(animated){
-  if(animated === undefined) animated = true;
+function showRevealBanner(){
   const shortestGuesses = state.shortestPath.length - 2;
   const banner = document.getElementById('winBanner');
   const pathRowEl = document.getElementById('winPathRow');
-  const lead = state.outcome === 'lost' ? 'Out of guesses.' : 'Solution revealed.';
   document.getElementById('winHeadline').innerHTML =
-    `${lead} The shortest route from <b>${state.start}</b> to <b>${state.end}</b> takes <b>${shortestGuesses}</b> guesses.`;
-  pathRowEl.classList.toggle('solution-reveal', animated);
-  pathRowEl.innerHTML = (animated ? buildPathRowAnimated(state.shortestPath, REVEAL_STAGGER_MS) : buildPathRow(state.shortestPath)) + '.';
-  renderBannerActions();
+    `Solution revealed. The shortest route from <b>${state.start}</b> to <b>${state.end}</b> takes <b>${shortestGuesses}</b> guesses.`;
+  pathRowEl.classList.add('solution-reveal');
+  pathRowEl.innerHTML = buildPathRowAnimated(state.shortestPath, REVEAL_STAGGER_MS) + '.';
   banner.classList.remove('perfect');
   banner.classList.add('show');
-}
-
-// In the daily, Reveal Solution means giving up, so it needs a second tap.
-let giveUpConfirmTimer = null;
-function resetGiveUpConfirm(){
-  clearTimeout(giveUpConfirmTimer);
-  const card = document.getElementById('giveUpBtn');
-  card.classList.remove('confirming');
-  card.querySelector('.action-card-cta').innerHTML = 'Reveal <span class="cta-arrow">&rarr;</span>';
 }
 
 // Sequentially lights up each intermediate district of the shortest path on
 // the map (start -> ... -> end), mirroring the banner's chip fade-in timing.
 // Uses the same beige "connected chain" styling as a normal win, and stays
 // highlighted until the next New Route since state.revealed only resets there.
-function revealSolution(outcome){
+function revealSolution(){
   if(state.won) return;
   state.won = true;
-  state.outcome = outcome || 'gaveup';
   state.revealed = true;
   state.revealedSet = new Set();
-  updateGuessCount();
   showRevealBanner();
 
   celebrationGen++;
   const myGen = celebrationGen;
-  if(mode === 'daily'){
-    saveDailyRecord();
-    recordDailyResult(false);
-    setTimeout(()=>{ if(myGen === celebrationGen) openStats(); }, state.shortestPath.length * REVEAL_STAGGER_MS + 1400);
-  }
   const intermediates = state.shortestPath.slice(1, -1);
   intermediates.forEach((name, i)=>{
     setTimeout(()=>{
@@ -2284,35 +1807,18 @@ function checkWin(){
     state.won = true;
     celebrationGen++;
     const myGen = celebrationGen;
-    state.outcome = 'won';
     const nodeSet = new Set(state.guessedNames);
     nodeSet.add(state.start);
     nodeSet.add(state.end);
     const yourPath = bfsPathRestricted(state.start, state.end, nodeSet) || [state.start, state.end];
     const isPerfect = computeIsPerfect();
-    if(mode === 'daily'){ saveDailyRecord(); recordDailyResult(true); }
-    updateGuessCount();
     const delay = celebrateRoute(yourPath, myGen);
     setTimeout(()=>{
       if(myGen !== celebrationGen) return;
       showSuccessBanner(isPerfect);
       if(isPerfect) fullMapSparkle(myGen);
-      if(mode === 'daily') setTimeout(()=>{ if(myGen === celebrationGen) openStats(); }, 1600);
     }, delay);
   }
-}
-
-// Counts a resolved guess and adds its ledger row (no win check, no render).
-// Repeats are shown in the ledger but never count as a guess.
-function applyGuess(resolved){
-  const isRepeat = state.guessedNames.has(resolved);
-  if(!isRepeat){
-    state.guesses++;
-    state.guessedNames.add(resolved);
-    state.order.push(resolved);
-  }
-  addLedgerRow(resolved, guessTier(resolved), isRepeat);
-  return isRepeat;
 }
 
 function submitGuess(){
@@ -2337,13 +1843,17 @@ function submitGuess(){
     document.getElementById('ledger').insertBefore(row, document.getElementById('ledger').firstChild);
     return;
   }
-  applyGuess(resolved);
-  updateGuessCount();
+  const isRepeat = state.guessedNames.has(resolved);
+  const onRoute = state.shortestPath.includes(resolved);
+  if(!isRepeat){
+    state.guesses++;
+    state.guessedNames.add(resolved);
+    document.getElementById('mapCaptionRight').textContent = 'Guesses: '+state.guesses;
+  }
   renderMap(resolved);
+  addLedgerRow(resolved, onRoute, isRepeat);
   ensureFocusVisible();
-  saveDailyRecord();
   checkWin();
-  if(!state.won && state.guesses >= guessLimit()) revealSolution('lost');
 }
 
 function playCardShine(el){
@@ -2358,153 +1868,13 @@ const giveUpBtnEl = document.getElementById('giveUpBtn');
 const resetBtn = document.getElementById('resetBtn');
 newPuzzleBtn.addEventListener('click', ()=>{
   playCardShine(newPuzzleBtn);
-  if(mode === 'daily') setMode('practice');
-  else initPuzzle();
+  initPuzzle();
 });
 giveUpBtnEl.addEventListener('click', ()=>{
-  if(state.won) return;
-  if(mode === 'daily' && !giveUpBtnEl.classList.contains('confirming')){
-    giveUpBtnEl.classList.add('confirming');
-    giveUpBtnEl.querySelector('.action-card-cta').innerHTML = 'Tap again to give up <span class="cta-arrow">&rarr;</span>';
-    clearTimeout(giveUpConfirmTimer);
-    giveUpConfirmTimer = setTimeout(resetGiveUpConfirm, 3500);
-    return;
-  }
-  resetGiveUpConfirm();
   playCardShine(giveUpBtnEl);
-  revealSolution('gaveup');
+  revealSolution();
 });
 resetBtn.addEventListener('click', resetCurrentRoute);
-
-// ---- Daily / Practice mode switch ----
-const CARD_TEXT = {
-  daily: {
-    newTitle:'Practice', newDesc:'Today’s daily is set. Play unlimited practice routes.', newCta:'Play',
-    giveDesc:'Give up today’s puzzle and see the shortest path.'
-  },
-  practice: {
-    newTitle:'New Route', newDesc:'Get a fresh start and end district to connect.', newCta:'Go',
-    giveDesc:'See the shortest path if you’re stuck.'
-  }
-};
-function setMode(m){
-  mode = m;
-  document.body.classList.toggle('mode-daily', m === 'daily');
-  document.querySelectorAll('.mode-btn').forEach(b => {
-    const on = b.getAttribute('data-mode') === m;
-    b.classList.toggle('active', on);
-    b.setAttribute('aria-pressed', on);
-  });
-  const t = CARD_TEXT[m];
-  newPuzzleBtn.querySelector('.action-card-title').textContent = t.newTitle;
-  newPuzzleBtn.querySelector('.action-card-desc').textContent = t.newDesc;
-  newPuzzleBtn.querySelector('.action-card-cta').innerHTML = t.newCta + ' <span class="cta-arrow">&rarr;</span>';
-  giveUpBtnEl.querySelector('.action-card-desc').textContent = t.giveDesc;
-  if(m === 'daily') startDaily(); else initPuzzle();
-}
-document.querySelectorAll('.mode-btn').forEach(b => b.addEventListener('click', ()=>{
-  const m = b.getAttribute('data-mode');
-  if(m !== mode) setMode(m);
-}));
-
-// ---- Stats modal ----
-const statsOverlay = document.getElementById('statsOverlay');
-let countdownTimer = null;
-function currentStreak(st){
-  const today = istDateKey();
-  return (st.lastWon === today || st.lastWon === shiftDateKey(today, -1)) ? st.curStreak : 0;
-}
-function openStats(){
-  const st = loadStats();
-  document.getElementById('statsMapLabel').textContent = mapLabel() + ' · Daily puzzle';
-  document.getElementById('stPlayed').textContent = st.played;
-  document.getElementById('stWinPct').textContent = st.played ? Math.round(st.won / st.played * 100) : 0;
-  document.getElementById('stStreak').textContent = currentStreak(st);
-  document.getElementById('stMaxStreak').textContent = st.maxStreak;
-  const labels = ['Perfect', '+1', '+2', '+3', '+4', 'Missed'];
-  const max = Math.max(1, ...st.dist);
-  const highlight = st.lastPlayed === istDateKey() ? st.lastBucket : null;
-  document.getElementById('statsDist').innerHTML = labels.map((lab, i) => {
-    const v = st.dist[i];
-    const pct = Math.max(7, v / max * 100);
-    return `<div class="dist-row${i===highlight?' current':''}${i===5?' miss':''}"><span class="dist-label">${lab}</span>` +
-      `<span class="dist-track"><span class="dist-bar" style="width:${pct}%">${v}</span></span></div>`;
-  }).join('');
-  const doneToday = !!(store.get(dailyRecordKey(istDateKey())) || {}).outcome;
-  document.getElementById('statsShareBtn').style.display =
-    (mode === 'daily' && state.outcome && state.dateKey === istDateKey()) ? '' : 'none';
-  document.getElementById('statsNextWrap').style.display = doneToday ? '' : 'none';
-  tickCountdown();
-  clearInterval(countdownTimer);
-  countdownTimer = setInterval(tickCountdown, 1000);
-  statsOverlay.classList.add('show');
-}
-function closeStats(){
-  statsOverlay.classList.remove('show');
-  clearInterval(countdownTimer);
-}
-function tickCountdown(){
-  const nowIst = Date.now() + 5.5*3600e3;
-  const ms = 864e5 - (nowIst % 864e5);
-  const h = Math.floor(ms/3600e3), mi = Math.floor(ms%3600e3/60e3), s = Math.floor(ms%60e3/1e3);
-  const pad = x => String(x).padStart(2,'0');
-  document.getElementById('statsCountdown').textContent = `${pad(h)}:${pad(mi)}:${pad(s)}`;
-}
-document.getElementById('statsBtn').addEventListener('click', openStats);
-document.getElementById('statsCloseBtn').addEventListener('click', closeStats);
-document.getElementById('statsShareBtn').addEventListener('click', shareResult);
-statsOverlay.addEventListener('click', (e)=>{ if(e.target === statsOverlay) closeStats(); });
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape'){ closeStats(); closeConfig(); }
-});
-
-// ---- Share card ----
-function buildShareText(){
-  const par = state.shortestPath.length - 2;
-  const head = mode === 'daily'
-    ? `${mapLabel()} Travle #${dayNumber(state.dateKey)}`
-    : `${mapLabel()} Travle · Practice`;
-  let result;
-  if(state.outcome === 'won'){
-    result = state.guesses === par
-      ? `✦ Perfect — ${state.guesses}/${par}`
-      : `${state.guesses} guesses · par ${par}`;
-  } else if(state.outcome === 'lost'){
-    result = `✗ Out of guesses · par ${par}`;
-  } else {
-    result = `✗ Gave up after ${state.guesses} · par ${par}`;
-  }
-  const squares = state.order.map(n => TIER_EMOJI[guessTier(n)]);
-  const rows = [];
-  for(let i=0; i<squares.length; i+=8) rows.push(squares.slice(i, i+8).join(''));
-  const url = location.protocol.startsWith('http') ? location.href.split(/[?#]/)[0] : 'utkarshacad.github.io/up-travle';
-  return [head, `${state.start} → ${state.end}`, result, ...rows, url].filter(Boolean).join('\n');
-}
-async function shareResult(){
-  const text = buildShareText();
-  if(window.matchMedia('(pointer:coarse)').matches && navigator.share){
-    try{ await navigator.share({text}); return; }
-    catch(e){ if(e && e.name === 'AbortError') return; }
-  }
-  try{
-    await navigator.clipboard.writeText(text);
-  }catch(e){
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    try{ document.execCommand('copy'); }catch(_){}
-    ta.remove();
-  }
-  showToast('Result copied — paste it anywhere');
-}
-let toastTimer = null;
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
-}
 
 const toggleRtoBtn = document.getElementById('toggleRtoBtn');
 const toggleBoundariesBtn = document.getElementById('toggleBoundariesBtn');
@@ -2606,7 +1976,6 @@ inputEl.addEventListener('keydown', (e)=>{
   } else if(e.key === 'Enter'){
     e.preventDefault();
     if(state.won){
-      if(mode === 'daily'){ openStats(); return; }
       cancelCelebration();
       initPuzzle();
       return;
@@ -2637,17 +2006,13 @@ let view = {x:0, y:0, w:BASE_W, h:BASE_H};
 
 function applyView(){
   mapSvg.setAttribute('viewBox', `${view.x} ${view.y} ${view.w} ${view.h}`);
-  // When zoomed in, the map captures touch drags for panning; at full view,
-  // a vertical swipe over the map still scrolls the page on phones.
-  mapSvg.classList.toggle('zoomed', view.w < BASE_W - 0.5);
 }
 
 function zoomBy(factor){
-  zoomToWidth(view.w*factor, view.x + view.w/2, view.y + view.h/2);
-}
-function zoomToWidth(w, cx, cy){
-  const newW = Math.min(BASE_W, Math.max(BASE_W*0.28, w));
+  const newW = Math.min(BASE_W, Math.max(BASE_W*0.28, view.w*factor));
   const newH = newW * (BASE_H/BASE_W);
+  const cx = view.x + view.w/2;
+  const cy = view.y + view.h/2;
   view.w = newW; view.h = newH;
   view.x = clamp(cx - newW/2, 0, BASE_W-newW);
   view.y = clamp(cy - newH/2, 0, BASE_H-newH);
@@ -2666,36 +2031,15 @@ document.getElementById('zoomResetBtn').addEventListener('click', ()=>{
   applyView();
 });
 
-// Pointer events cover mouse drag-to-pan plus one-finger pan and two-finger
-// pinch-zoom on touch screens.
 let dragging = false, dragStart = null, viewStart = null;
-const activePointers = new Map();
-let pinch = null;
-function pointerDist(){
-  const [a, b] = [...activePointers.values()];
-  return Math.hypot(a.x-b.x, a.y-b.y);
-}
-mapSvg.addEventListener('pointerdown', (e)=>{
-  activePointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
-  if(activePointers.size === 2){
-    dragging = false;
-    if(viewAnimId){ cancelAnimationFrame(viewAnimId); viewAnimId = null; }
-    pinch = {d: pointerDist(), w: view.w, cx: view.x + view.w/2, cy: view.y + view.h/2};
-    return;
-  }
+mapSvg.addEventListener('mousedown', (e)=>{
   if(view.w >= BASE_W) return; // nothing to pan at default zoom
   dragging = true;
   dragStart = {x:e.clientX, y:e.clientY};
   viewStart = {x:view.x, y:view.y};
   mapSvg.classList.add('panning');
 });
-window.addEventListener('pointermove', (e)=>{
-  if(activePointers.has(e.pointerId)) activePointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
-  if(pinch && activePointers.size === 2){
-    const d = pointerDist();
-    if(d > 0) zoomToWidth(pinch.w * pinch.d / d, pinch.cx, pinch.cy);
-    return;
-  }
+window.addEventListener('mousemove', (e)=>{
   if(!dragging) return;
   const rect = mapSvg.getBoundingClientRect();
   const scale = view.w / rect.width;
@@ -2705,16 +2049,10 @@ window.addEventListener('pointermove', (e)=>{
   view.y = clamp(viewStart.y - dy, 0, BASE_H-view.h);
   applyView();
 });
-function endPointer(e){
-  activePointers.delete(e.pointerId);
-  if(activePointers.size < 2) pinch = null;
-  if(activePointers.size === 0){
-    dragging = false;
-    mapSvg.classList.remove('panning');
-  }
-}
-window.addEventListener('pointerup', endPointer);
-window.addEventListener('pointercancel', endPointer);
+window.addEventListener('mouseup', ()=>{
+  dragging = false;
+  mapSvg.classList.remove('panning');
+});
 mapSvg.addEventListener('wheel', (e)=>{
   e.preventDefault();
   zoomBy(e.deltaY < 0 ? 0.9 : 1.1);
@@ -2780,7 +2118,7 @@ function focusOnStartEnd(){
   view = {x:0, y:0, w:BASE_W, h:BASE_H};
   applyView();
   requestAnimationFrame(()=>{
-    const bounds = boundsOfNames([state.start, state.end, ...state.guessedNames]);
+    const bounds = boundsOfNames([state.start, state.end]);
     animateViewTo(fitViewToBounds(bounds));
   });
 }
@@ -2820,9 +2158,6 @@ document.querySelectorAll('.map-card[data-map]').forEach(card=>{
     minGuessesSlider.value = defaults.minGuesses;
     maxGuessesSlider.value = defaults.maxGuesses;
     updateSliderVisuals();
-    // Start the new map straight away so the board never shows a stale
-    // route from the previous map (each map has its own daily).
-    if(mode === 'daily') startDaily(); else initPuzzle();
   });
 });
 
@@ -2974,20 +2309,11 @@ document.getElementById('applyConfigBtn').addEventListener('click', ()=>{
   }
 
   closeConfig();
-  // Custom routes and difficulty are practice settings; the daily is fixed.
-  if(mode === 'daily') setMode('practice');
-  else initPuzzle();
+  initPuzzle();
 });
 
-// ---- Boot: last-used map, today's daily ----
-(function boot(){
-  const savedMap = store.get('travle.v2.map');
-  const key = MAPS[savedMap] ? savedMap : 'up';
-  loadMap(key);
-  config.minGuesses = MAPS[key].defaults.minGuesses;
-  config.maxGuesses = MAPS[key].defaults.maxGuesses;
-  setMode('daily');
-})();
+loadMap('up');
+initPuzzle();
 </script>
 </body>
 </html>
