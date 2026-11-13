@@ -40,11 +40,18 @@ https://utkarshacad.github.io/up-travle/terrain-travle/
 ## Reference tools
 
 - **Legend** — below the map, a two-column key shows all six soil-type textures and all seven
-  region colors used on the map, so you can cross-reference while you play.
-- **Reveal Full Map** — the button next to Reset switches the entire map into a true-color,
-  fully-textured reference view (every district, every region, all at once), independent of
-  whatever round is in progress. Click it again (or start/reset a round) to go back to normal
-  play.
+  region colors used on the map, so you can cross-reference while you play. Every swatch is
+  clickable, any time — it opens a card with that soil type's or region's origin,
+  significance and features.
+- **Study the Map** — the button next to How to Play switches the entire map into a
+  true-color, fully-textured reference view (every district, every region, all at once,
+  with each region's name labeled directly on the map), independent of whatever round is in
+  progress. While studying, clicking a region label or a district opens the same info card —
+  a district's card shows both its region and its soil type. Click the button again (or
+  start/reset a round) to go back to normal play.
+- **How to Play** — a button that opens a modal covering the round flow, the
+  correct/missed/wrong color key, and the soil/region legend. Opens automatically the first
+  time anyone plays, then stays available on demand afterward.
 
 ## How it works
 
@@ -56,6 +63,9 @@ https://utkarshacad.github.io/up-travle/terrain-travle/
   Yellow) are mapped to all 75 UP districts.
 - District facts (history, culture, GI-tagged crafts, notable people, recent news) are shown
   on click, written in an editorial, magazine-style tone to match the rest of the game's look.
+- Each region and soil type has reference text (origin, significance, features) shown in a
+  popup card when its legend swatch, map label, or (in Study the Map mode) a district is
+  clicked.
 - Data is scaffolded to support additional state maps later (`TERRAIN_MAPS`), though only
   Uttar Pradesh has data right now.
 
