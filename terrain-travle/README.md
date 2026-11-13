@@ -60,9 +60,12 @@ https://utkarshacad.github.io/up-travle/terrain-travle/
 Inspired by hand-cut paper animation (think stop-motion cutouts on textured paper), a few
 touches run throughout, generated as plain CSS/SVG/PNG with no external image downloads:
 
-- **Canvas-weave background** — a tileable, procedurally generated woven-paper/canvas grain
-  (fractal noise + a thread pattern, rendered once and embedded) sits behind the background,
-  panels, and banners.
+- **Denim-blue canvas background** — a tileable, procedurally generated woven-canvas grain
+  (fractal noise + a thread pattern, rendered once and embedded, no photos used) in a muted
+  blue sits behind the page background, panels, and the map. The 7 region colors and 6 soil
+  textures on the map itself are unchanged, since those carry real meaning; the warm
+  cream/pink/amber UI accents (buttons, legend swatches, win banner) are unchanged too, so
+  they stand out against the blue the same way warm objects pop against a denim backdrop.
 - **Sticker outlines** — the mascot, legend swatches, and action cards carry a cream
   outline/ring, like a die-cut paper sticker.
 - **Handwritten accent font** — the district fact byline ("Field Notes") uses a casual script
