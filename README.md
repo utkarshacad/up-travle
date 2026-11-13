@@ -50,4 +50,7 @@ Maps are switched from the config modal using the map picker.
 
 ## Related
 
-A separate game, Terrain Travle (a physiographic region and soil quiz for UP), is developed alongside this one and is not part of this repository yet.
+A separate game, [Terrain Travle](terrain-travle/README.md), is developed alongside this one.
+Instead of chaining districts, each round asks you to identify every district in one of UP's
+seven physiographic regions, with real district facts and a soil/region legend. Play it at
+https://utkarshacad.github.io/up-travle/terrain-travle/
