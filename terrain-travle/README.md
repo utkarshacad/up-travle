@@ -53,6 +53,23 @@ https://utkarshacad.github.io/up-travle/terrain-travle/
   correct/missed/wrong color key, and the soil/region legend. Opens automatically the first
   time anyone plays, then stays available on demand afterward.
 
+## Look and feel
+
+Inspired by hand-cut paper animation (think stop-motion cutouts on textured paper), a few
+purely CSS/SVG touches run throughout without any external image assets:
+
+- **Paper grain** — a subtle noise texture overlays the background, panels, and banners.
+- **Sticker outlines** — action-card icons, the mascot, legend swatches, and action cards
+  carry a cream outline/ring, like a die-cut paper sticker.
+- **Stepped motion** — district glows, spark bursts, hover bounces, and dispatch pop-ins use
+  stepped (not smooth) easing, echoing frame-by-frame stop-motion.
+- **Handwritten accent font** — the district fact byline ("Field Notes") uses a casual script
+  font for a hand-labeled feel.
+- **Cutout-style icons** — the Next Region and Reveal Solution icons are filled paper-cutout
+  silhouettes rather than thin line icons.
+- **A jointed mascot** — a small kite with a wiggling, segmented tail pops in and dances
+  across the win banner on a perfect round (every district guessed right, nothing missed).
+
 ## How it works
 
 - Built on the same SVG district geometry as UP Travle, with each district rendered as a pair

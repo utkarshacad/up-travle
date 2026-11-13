@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terrain Travle — Uttar Pradesh Geography Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #1c1b19;
@@ -26,11 +26,15 @@
     --terrain-green-deep: #71905a;
     --terrain-amber: #cc9a4f;
     --gold-highlight: #f2c14e;
+    --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0.93  0 0 0 0 0.87  0 0 0 0 0.74  0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background: radial-gradient(ellipse at top left, #232220, var(--bg) 65%);
+    background-color: var(--bg);
+    background-image: radial-gradient(ellipse at top left, #232220, var(--bg) 65%), var(--paper-texture);
+    background-blend-mode: normal, overlay;
+    background-repeat: no-repeat, repeat;
     color:var(--ink);
     font-family:'Outfit',sans-serif;
     min-height:100vh;
@@ -73,7 +77,9 @@
   .layout{display:grid; grid-template-columns:1.5fr 1fr; gap:18px;}
   @media (max-width:880px){.layout{grid-template-columns:1fr;}}
   .panel{
-    background:var(--panel);
+    background-color:var(--panel);
+    background-image:var(--paper-texture);
+    background-blend-mode:overlay;
     border:1.5px solid var(--border);
     border-radius:4px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.35);
@@ -125,7 +131,8 @@
     width:20px;
     height:20px;
     border-radius:4px;
-    border:1px solid rgba(255,251,241,0.25);
+    border:none;
+    box-shadow:0 0 0 1.6px #FFFBF1, 0 2px 4px rgba(0,0,0,0.35);
     overflow:hidden;
   }
   .map-legend-swatch svg{width:100%; height:100%; display:block;}
@@ -311,7 +318,7 @@
   .district.terrain-region-correct{stroke:var(--gold-highlight); stroke-width:3.2;}
   .district.terrain-region-missed{stroke:#FFFBF1; stroke-width:1.6;}
   .district.true-color-preview{stroke:#FFFBF1; stroke-width:1.1;}
-  .district.celebrate{animation:districtGlow 0.6s ease;}
+  .district.celebrate{animation:districtGlow 0.6s steps(9,end);}
   .ttm-soil-overlay{pointer-events:none; transition:opacity 0.4s ease;}
   @keyframes districtGlow{
     0%{filter:brightness(1) saturate(1); transform:scale(1);}
@@ -319,12 +326,12 @@
     70%{filter:brightness(1.3) saturate(1.15); transform:scale(1.04);}
     100%{filter:brightness(1) saturate(1); transform:scale(1);}
   }
-  .spark{opacity:0; animation:sparkFly 0.8s ease-out forwards; animation-delay:var(--delay, 0ms);}
+  .spark{opacity:0; animation:sparkFly 0.8s steps(7,end) forwards; animation-delay:var(--delay, 0ms);}
   @keyframes sparkFly{
     0%{opacity:1; transform:translate(0px,0px) scale(1);}
     100%{opacity:0; transform:translate(var(--dx), var(--dy)) scale(0.25);}
   }
-  .ring-burst{fill:none; stroke:var(--beige); stroke-width:2.5; opacity:0.9; animation:ringBurst 0.7s ease-out forwards;}
+  .ring-burst{fill:none; stroke:var(--beige); stroke-width:2.5; opacity:0.9; animation:ringBurst 0.7s steps(9,end) forwards;}
   @keyframes ringBurst{
     0%{ r:2; opacity:0.9; stroke-width:3; }
     100%{ r:46; opacity:0; stroke-width:0.5; }
@@ -378,7 +385,7 @@
     margin-top:6px;
     min-height:1em;
   }
-  .district:hover{stroke:var(--ink-soft); stroke-width:2.8; animation:bounceHover 0.45s ease;}
+  .district:hover{stroke:var(--ink-soft); stroke-width:2.8; animation:bounceHover 0.45s steps(6,end);}
   #stateOutline{stroke:var(--ink-soft); stroke-width:1.6; vector-effect:non-scaling-stroke; pointer-events:none;}
   @keyframes bounceHover{
     0%{transform:scale(1);} 30%{transform:scale(1.05);} 55%{transform:scale(0.98);}
@@ -472,11 +479,13 @@
     border-radius:14px;
     border:1.5px solid rgba(0,0,0,0.15);
     cursor:pointer;
+    box-shadow:0 0 0 3px #FFFBF1, 0 6px 14px rgba(0,0,0,0.3);
+    background-blend-mode:overlay;
     transition:transform 0.16s ease, box-shadow 0.16s ease;
   }
-  .action-card.card-a{background:linear-gradient(155deg, #d99cac, #bd7e91); color:#2a1017;}
-  .action-card.card-b{background:linear-gradient(155deg, #e3cd9f, #c9a86f); color:#241d0d;}
-  .action-card:hover{transform:translateY(-3px); box-shadow:0 10px 22px rgba(0,0,0,0.35);}
+  .action-card.card-a{background-color:#c6879a; background-image:linear-gradient(155deg, #d99cac, #bd7e91), var(--paper-texture); color:#2a1017;}
+  .action-card.card-b{background-color:#d6b885; background-image:linear-gradient(155deg, #e3cd9f, #c9a86f), var(--paper-texture); color:#241d0d;}
+  .action-card:hover{transform:translateY(-3px); box-shadow:0 0 0 3px #FFFBF1, 0 10px 22px rgba(0,0,0,0.35);}
   .action-card:active{transform:translateY(-1px) scale(0.97);}
   .action-card::after{
     content:'';
@@ -490,8 +499,8 @@
   }
   .action-card.clicked::after{animation:cardShine 0.6s ease;}
   @keyframes cardShine{0%{left:-60%; opacity:0.9;} 100%{left:130%; opacity:0;}}
-  .action-card-icon{margin-bottom:10px; opacity:0.8;}
-  .action-card-icon svg{width:24px; height:24px; display:block;}
+  .action-card-icon{margin-bottom:10px;}
+  .action-card-icon svg{width:26px; height:26px; display:block; filter:url(#stickerOutline);}
   .action-card-title{font-family:'Playfair Display',serif; font-weight:700; font-size:1.18rem; margin-bottom:5px;}
   .action-card-desc{font-family:'Lora',serif; font-size:0.78rem; line-height:1.42; opacity:0.82; margin-bottom:12px;}
   .action-card-cta{
@@ -551,7 +560,7 @@
   }
   .terrain-score-line span{color:var(--beige);}
   .dispatch-section{margin:2px 0 16px;}
-  .dispatch-section.pulse-in{animation:dispatchIn 0.4s ease;}
+  .dispatch-section.pulse-in{animation:dispatchIn 0.4s steps(5,end);}
   .dispatch-heading{
     display:flex;
     justify-content:space-between;
@@ -570,9 +579,10 @@
     color:var(--beige);
   }
   .dispatch-heading-sub{
-    font-family:'Lora',serif;
-    font-style:italic;
-    font-size:0.72rem;
+    font-family:'Caveat',cursive;
+    font-weight:600;
+    font-style:normal;
+    font-size:0.98rem;
     color:var(--ink-soft);
   }
   @keyframes dispatchIn{
@@ -622,21 +632,59 @@
     color:var(--beige);
     line-height:0;
   }
+  .win-banner-wrap{position:relative; margin-bottom:14px;}
   .win-banner{
     display:none;
     position:relative;
     overflow:hidden;
-    background:var(--beige);
+    background-color:var(--beige);
+    background-image:var(--paper-texture);
+    background-blend-mode:overlay;
     color:#241d10;
     padding:16px 18px;
     border-radius:10px;
     font-family:'Playfair Display',serif;
     font-weight:600;
     font-size:1.02rem;
-    margin-bottom:14px;
+    margin-bottom:0;
     border:1.5px solid var(--border);
   }
   .win-banner.show{display:block; animation:bannerPop 0.5s cubic-bezier(.34,1.56,.64,1);}
+  .mascot-kite{
+    position:absolute;
+    top:-34px;
+    right:6px;
+    width:42px;
+    height:90px;
+    opacity:0;
+    pointer-events:none;
+    transform-origin:50% 100%;
+  }
+  .mascot-kite svg{width:100%; height:100%; display:block; filter:url(#stickerOutline);}
+  .mascot-kite-body{transform-origin:35px 52px;}
+  .mascot-kite.play{animation:mascotPopIn 1.8s steps(14,end) 1;}
+  .mascot-kite.play .mascot-kite-body{animation:mascotSway 1.8s steps(10,end) 1;}
+  .mascot-kite.play .mascot-tail-seg{animation:mascotTailWag 0.5s steps(4,end) infinite;}
+  .mascot-kite.play .mascot-tail-seg:nth-child(2){animation-delay:0.07s;}
+  .mascot-kite.play .mascot-tail-seg:nth-child(3){animation-delay:0.14s;}
+  .mascot-kite.play .mascot-tail-seg:nth-child(4){animation-delay:0.21s;}
+  @keyframes mascotPopIn{
+    0%{opacity:0; transform:translateY(14px) scale(0.6);}
+    12%{opacity:1; transform:translateY(0) scale(1.05);}
+    20%{transform:translateY(0) scale(1);}
+    85%{opacity:1; transform:translateY(0) scale(1);}
+    100%{opacity:0; transform:translateY(-10px) scale(0.9);}
+  }
+  @keyframes mascotSway{
+    0%,100%{transform:rotate(0deg);}
+    25%{transform:rotate(-7deg);}
+    50%{transform:rotate(0deg);}
+    75%{transform:rotate(7deg);}
+  }
+  @keyframes mascotTailWag{
+    0%,100%{transform:rotate(0deg);}
+    50%{transform:rotate(16deg);}
+  }
   .win-banner.perfect::before{
     content:'';
     position:absolute;
@@ -675,6 +723,19 @@
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <filter id="stickerOutline" x="-60%" y="-60%" width="220%" height="220%">
+      <feMorphology operator="dilate" radius="1.6" in="SourceAlpha" result="dilated"/>
+      <feFlood flood-color="#FFFBF1" result="flood"/>
+      <feComposite in="flood" in2="dilated" operator="in" result="outline"/>
+      <feMerge>
+        <feMergeNode in="outline"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
 <div class="wrap">
   <header>
     <div class="title-block">
@@ -872,7 +933,7 @@
         <div class="action-cards">
           <button type="button" class="action-card card-a" id="terrainNextBtn">
             <span class="action-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h4l3 10h4l3-6"/><path d="M4 17h4l1.5-5"/><path d="M17 4l3 3-3 3"/><path d="M17 14l3 3-3 3"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FFFBF1" stroke="none"><path d="M3 14 L13 4 L12.3 10.5 L21 8.5 L11 19 L11.6 12.3 Z"/></svg>
             </span>
             <span class="action-card-title">Next Region</span>
             <span class="action-card-desc">Get a new physiographic region to identify.</span>
@@ -880,7 +941,7 @@
           </button>
           <button type="button" class="action-card card-b" id="terrainRevealBtn">
             <span class="action-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FFFBF1" stroke="none"><path fill-rule="evenodd" d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Zm10.5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
             </span>
             <span class="action-card-title">Reveal Solution</span>
             <span class="action-card-desc">See every district in this region if you're stuck.</span>
@@ -894,8 +955,32 @@
           <span class="terrain-legend-item"><span class="terrain-legend-swatch" style="background:var(--beige);"></span>Missed</span>
         </div>
 
-        <div class="win-banner" id="terrainSubmitBanner">
-          <div id="terrainSubmitHeadline"></div>
+        <div class="win-banner-wrap">
+          <div class="win-banner" id="terrainSubmitBanner">
+            <div id="terrainSubmitHeadline"></div>
+          </div>
+          <div class="mascot-kite" id="mascotKite" aria-hidden="true">
+            <svg viewBox="0 0 70 150">
+              <g class="mascot-kite-body">
+                <path d="M35 6 L60 52 L35 98 L10 52 Z" fill="#FFFBF1"/>
+                <path d="M35 6 L35 98 M10 52 L60 52" stroke="#4a453c" stroke-width="1.2"/>
+                <path d="M35 6 L60 52 L35 52 Z" fill="var(--pink)"/>
+                <path d="M35 52 L35 98 L10 52 Z" fill="var(--terrain-amber)" opacity="0.9"/>
+              </g>
+              <line x1="35" y1="98" x2="35" y2="106" stroke="#4a453c" stroke-width="1.1"/>
+              <g class="mascot-tail-seg" style="transform-origin:35px 106px;">
+                <path d="M26 106 L35 114 L44 106 L35 101 Z" fill="var(--pink)"/>
+                <line x1="35" y1="114" x2="35" y2="120" stroke="#4a453c" stroke-width="1"/>
+              </g>
+              <g class="mascot-tail-seg" style="transform-origin:35px 120px;">
+                <path d="M27 120 L35 127 L43 120 L35 116 Z" fill="var(--terrain-amber)"/>
+                <line x1="35" y1="127" x2="35" y2="133" stroke="#4a453c" stroke-width="1"/>
+              </g>
+              <g class="mascot-tail-seg" style="transform-origin:35px 133px;">
+                <path d="M28 133 L35 140 L42 133 L35 129 Z" fill="var(--cyan)"/>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -1437,9 +1522,18 @@ function finishTerrainRound(giveUp){
     document.getElementById('terrainSubmitHeadline').innerHTML = headline;
     banner.classList.toggle('perfect', isPerfect);
     document.getElementById('mapCaptionRight').textContent = `Score: ${terrainState.regionScore}`;
+    if(isPerfect) setTimeout(playMascotCelebration, 350);
   }
   banner.classList.add('show');
   renderTerrainMap();
+}
+
+function playMascotCelebration(){
+  const mascot = document.getElementById('mascotKite');
+  if(!mascot) return;
+  mascot.classList.remove('play');
+  void mascot.offsetWidth;
+  mascot.classList.add('play');
 }
 
 function playCardShine(el){
@@ -1457,6 +1551,8 @@ function cancelCelebration(){
   const layer = document.getElementById('celebrationLayer');
   if(layer) layer.innerHTML = '';
   document.querySelectorAll('.district.celebrate').forEach(el => el.classList.remove('celebrate'));
+  const mascot = document.getElementById('mascotKite');
+  if(mascot) mascot.classList.remove('play');
 }
 
 function burstAt(cx, cy){
