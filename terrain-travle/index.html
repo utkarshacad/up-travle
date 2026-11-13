@@ -207,6 +207,10 @@
   .howto-example-label{font-family:'Outfit',sans-serif; font-size:0.78rem; color:var(--ink); line-height:1.3;}
   .howto-example-label span{display:block; font-size:0.72rem; color:var(--ink-soft); margin-top:2px;}
   .howto-legend{border-top:1px dashed var(--border); margin-top:0; padding-top:12px;}
+  .region-study-label-bg{fill:var(--panel); fill-opacity:0.92; stroke:var(--beige); stroke-width:1.2;}
+  .region-study-label-main, .region-study-label-sub{font-family:'Outfit',sans-serif; text-anchor:middle; fill:var(--ink);}
+  .region-study-label-main{font-size:15px; font-weight:700;}
+  .region-study-label-sub{font-size:11px; font-weight:500; fill:var(--ink-soft);}
   .zoom-controls{position:absolute; top:58px; right:20px; display:flex; flex-direction:column; gap:6px;}
   .zoom-btn{
     width:34px; height:34px; padding:0;
@@ -612,6 +616,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.75.4-1.2 1-1.2 1.9v.3"/><line x1="12" y1="17" x2="12" y2="17.1"/></svg>
         How to Play
       </button>
+      <button type="button" id="studyRegionsBtn" class="config-trigger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a1 1 0 0 1 1.4-.9L9 6l6-2 4.6 1.8A1 1 0 0 1 20 5.9v12.2a1 1 0 0 1-1.4.9L15 18l-6 2-4.6-1.8A1 1 0 0 1 4 17.3Z"/><path d="M9 6v12M15 4v14"/></svg>
+        <span id="studyRegionsLabel">Study the Regions</span>
+      </button>
       <button type="button" id="fullMapToggleBtn" class="config-trigger">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
         <span id="fullMapToggleLabel">Reveal Full Map</span>
@@ -732,6 +740,7 @@
         <g id="districtsLayer"></g>
         <path id="stateOutline" fill="none"></path>
         <g id="celebrationLayer" pointer-events="none"></g>
+        <g id="regionLabelsLayer" pointer-events="none"></g>
         <text id="watermark" x="16" y="732" font-family="Playfair Display" font-weight="600" font-size="30" fill="var(--ink-soft)" opacity="0.16" pointer-events="none">terrain &middot; travle</text>
         <g id="hoverLabel">
           <path id="hoverLabelTail"></path>
@@ -848,6 +857,19 @@ function loadTerrainMap(key){
   const subEl = document.getElementById('gameSub');
   if(subEl) subEl.textContent = m.label + ' Physiographic Regions & Soil Quiz';
   buildLegend();
+  computeRegionLabelPositions();
+}
+
+function computeRegionLabelPositions(){
+  regionLabelPositions = {};
+  Object.entries(REGIONS || {}).forEach(([key, info]) => {
+    let sx = 0, sy = 0, n = 0;
+    info.districts.forEach(name => {
+      const d = DATA[name];
+      if(d){ sx += d.cx; sy += d.cy; n++; }
+    });
+    if(n > 0) regionLabelPositions[key] = {x: sx/n, y: sy/n};
+  });
 }
 
 function renderLegendItems(soilContainer, regionContainer){
@@ -1041,6 +1063,7 @@ function resetTerrainPanelUI(){
 function startTerrainRound(){
   cancelCelebration();
   if(fullMapPreviewActive) setFullMapPreview(false);
+  if(regionStudyActive) setRegionStudy(false);
   const key = pickRandomRegionKey();
   terrainState = {
     regionKey: key,
@@ -1067,6 +1090,7 @@ function resetTerrainRound(){
   if(!terrainState.regionKey) return;
   cancelCelebration();
   if(fullMapPreviewActive) setFullMapPreview(false);
+  if(regionStudyActive) setRegionStudy(false);
   terrainState.guessSet = new Set();
   terrainState.submitted = false;
   terrainState.roundComplete = false;
@@ -1082,7 +1106,7 @@ function resetTerrainRound(){
 }
 
 function handleDistrictClick(name){
-  if(fullMapPreviewActive) return;
+  if(fullMapPreviewActive || regionStudyActive) return;
   if(terrainState.submitted) return;
   if(terrainState.guessSet.has(name)) terrainState.guessSet.delete(name);
   else terrainState.guessSet.add(name);
@@ -1092,9 +1116,12 @@ function handleDistrictClick(name){
 }
 
 let fullMapPreviewActive = false;
+let regionStudyActive = false;
+let regionLabelPositions = {};
 
 function setFullMapPreview(active){
   fullMapPreviewActive = active;
+  if(active && regionStudyActive) setRegionStudy(false);
   const btn = document.getElementById('fullMapToggleBtn');
   const label = document.getElementById('fullMapToggleLabel');
   if(btn) btn.classList.toggle('active', active);
@@ -1103,6 +1130,67 @@ function setFullMapPreview(active){
     ? 'Reference view — every district, true colors'
     : 'Hover a district to identify it';
   renderTerrainMap();
+}
+
+function setRegionStudy(active){
+  regionStudyActive = active;
+  if(active && fullMapPreviewActive) setFullMapPreview(false);
+  const btn = document.getElementById('studyRegionsBtn');
+  const label = document.getElementById('studyRegionsLabel');
+  if(btn) btn.classList.toggle('active', active);
+  if(label) label.textContent = active ? 'Hide Regions' : 'Study the Regions';
+  document.getElementById('mapCaptionLeft').textContent = active
+    ? 'Studying all 7 physiographic regions'
+    : 'Hover a district to identify it';
+  renderTerrainMap();
+  renderRegionLabels();
+}
+
+function splitRegionLabel(label){
+  const m = label.match(/^(.*?)\s*(\([^)]*\))$/);
+  return m ? [m[1], m[2]] : [label];
+}
+
+function renderRegionLabels(){
+  const layer = document.getElementById('regionLabelsLayer');
+  if(!layer) return;
+  layer.innerHTML = '';
+  if(!regionStudyActive) return;
+
+  Object.entries(REGIONS || {}).forEach(([key, info]) => {
+    const pos = regionLabelPositions[key];
+    if(!pos) return;
+    const lines = splitRegionLabel(info.label);
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'region-study-label');
+    layer.appendChild(g);
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', pos.x);
+    text.setAttribute('y', pos.y);
+    text.setAttribute('text-anchor', 'middle');
+    lines.forEach((line, i) => {
+      const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+      tspan.setAttribute('x', pos.x);
+      tspan.setAttribute('dy', i === 0 ? '0' : '1.15em');
+      tspan.setAttribute('class', i === 0 ? 'region-study-label-main' : 'region-study-label-sub');
+      tspan.textContent = line;
+      text.appendChild(tspan);
+    });
+    g.appendChild(text);
+
+    const bbox = text.getBBox();
+    const padX = 10, padY = 6;
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('x', bbox.x - padX);
+    rect.setAttribute('y', bbox.y - padY);
+    rect.setAttribute('width', bbox.width + padX*2);
+    rect.setAttribute('height', bbox.height + padY*2);
+    rect.setAttribute('rx', 8);
+    rect.setAttribute('class', 'region-study-label-bg');
+    g.insertBefore(rect, text);
+  });
 }
 
 function renderTerrainMap(){
@@ -1116,6 +1204,18 @@ function renderTerrainMap(){
       if(el.base.getAttribute('class') !== cls) el.base.setAttribute('class', cls);
       el.base.style.fill = DATA[name].regionColor || '';
       el.overlay.style.opacity = '0.5';
+    }
+    return;
+  }
+
+  if(regionStudyActive){
+    for(const name of names){
+      const el = districtElements[name];
+      if(!el) continue;
+      const cls = 'district true-color-preview';
+      if(el.base.getAttribute('class') !== cls) el.base.setAttribute('class', cls);
+      el.base.style.fill = DATA[name].regionColor || '';
+      el.overlay.style.opacity = '0';
     }
     return;
   }
@@ -1155,7 +1255,7 @@ function renderTerrainMap(){
 }
 
 function submitTerrainGuess(){
-  if(fullMapPreviewActive || terrainState.submitted || !terrainState.regionKey) return;
+  if(fullMapPreviewActive || regionStudyActive || terrainState.submitted || !terrainState.regionKey) return;
   const region = REGIONS[terrainState.regionKey];
   const regionSet = new Set(region.districts);
   const correct = [], wrong = [];
@@ -1177,7 +1277,7 @@ function submitTerrainGuess(){
 }
 
 function revealTerrainSolution(){
-  if(fullMapPreviewActive || !terrainState.regionKey || terrainState.submitted) return;
+  if(fullMapPreviewActive || regionStudyActive || !terrainState.regionKey || terrainState.submitted) return;
   cancelCelebration();
   const region = REGIONS[terrainState.regionKey];
   const regionSet = new Set(region.districts);
@@ -1435,6 +1535,9 @@ document.getElementById('terrainNextBtn').addEventListener('click', ()=>{
 document.getElementById('resetBtn').addEventListener('click', resetTerrainRound);
 document.getElementById('fullMapToggleBtn').addEventListener('click', ()=>{
   setFullMapPreview(!fullMapPreviewActive);
+});
+document.getElementById('studyRegionsBtn').addEventListener('click', ()=>{
+  setRegionStudy(!regionStudyActive);
 });
 
 // ==================== How to Play modal ====================
