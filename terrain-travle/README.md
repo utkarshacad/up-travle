@@ -46,8 +46,10 @@ https://utkarshacad.github.io/up-travle/terrain-travle/
 - **Study the Map** — the button next to How to Play switches the entire map into a
   true-color, fully-textured reference view (every district, every region, all at once,
   with each region's name labeled directly on the map), independent of whatever round is in
-  progress. While studying, clicking a region label or a district opens the same info card —
-  a district's card shows both its region and its soil type. Click the button again (or
+  progress. While studying, hovering (or tapping) a district shows a small floating label
+  with its name and region, which fades out as soon as you move away — nothing to close.
+  Clicking a region label still opens the full info card for that region. Soil types are
+  looked up separately, from the legend below the map. Click the button again (or
   start/reset a round) to go back to normal play.
 - **How to Play** — a button that opens a modal covering the round flow, the
   correct/missed/wrong color key, and the soil/region legend. Opens automatically the first
@@ -56,19 +58,20 @@ https://utkarshacad.github.io/up-travle/terrain-travle/
 ## Look and feel
 
 Inspired by hand-cut paper animation (think stop-motion cutouts on textured paper), a few
-purely CSS/SVG touches run throughout without any external image assets:
+touches run throughout, generated as plain CSS/SVG/PNG with no external image downloads:
 
-- **Paper grain** — a subtle noise texture overlays the background, panels, and banners.
-- **Sticker outlines** — action-card icons, the mascot, legend swatches, and action cards
-  carry a cream outline/ring, like a die-cut paper sticker.
-- **Stepped motion** — district glows, spark bursts, hover bounces, and dispatch pop-ins use
-  stepped (not smooth) easing, echoing frame-by-frame stop-motion.
+- **Canvas-weave background** — a tileable, procedurally generated woven-paper/canvas grain
+  (fractal noise + a thread pattern, rendered once and embedded) sits behind the background,
+  panels, and banners.
+- **Sticker outlines** — the mascot, legend swatches, and action cards carry a cream
+  outline/ring, like a die-cut paper sticker.
 - **Handwritten accent font** — the district fact byline ("Field Notes") uses a casual script
   font for a hand-labeled feel.
-- **Cutout-style icons** — the Next Region and Reveal Solution icons are filled paper-cutout
-  silhouettes rather than thin line icons.
 - **A jointed mascot** — a small kite with a wiggling, segmented tail pops in and dances
   across the win banner on a perfect round (every district guessed right, nothing missed).
+
+All motion in the game — district glows, spark bursts, hover effects, pop-ins, and the
+mascot's dance — runs on smooth, high-fps easing rather than a stepped/stop-motion look.
 
 ## How it works
 
