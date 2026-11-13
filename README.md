@@ -6,7 +6,7 @@ The whole game is a single self-contained HTML file: no build step, no server, n
 
 ## Play
 
-Open `up-travle.html` in any modern browser.
+Open `index.html` in any modern browser, or play it online at https://utkarshacad.github.io/up-travle/
 
 ## Maps
 
@@ -38,7 +38,7 @@ Maps are switched from the config modal using the map picker.
 
 ## Known issues
 
-- Some J&K district connections are not always recognised by the game. A concrete example (start, end and the district that was rejected) is needed to track this down.
+- J&K: an audit of the district connections against the map geometry found them consistent (symmetric, fully connected, diameter 5). Four district pairs touch only at a corner or sliver and are deliberately not connected: Anantnag-Shopiyan, Kulgam-Rajouri, Bandipora-Srinagar and Budgam-Kulgam. Extra spelling variants (e.g. Badgam, Baramula, Shupiyan) were added. If a connection is still rejected, a concrete example (start, end and the district that was rejected) is needed.
 
 ## Ideas for later
 
